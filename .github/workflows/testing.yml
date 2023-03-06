@@ -16,6 +16,3 @@ jobs:
 
       - name: 🧪 Testing
         run: npm test
-        env:
-          REACT_APP_PHOTO_KEY: ${{ secrets.REACT_APP_PHOTO_KEY }}
-          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
