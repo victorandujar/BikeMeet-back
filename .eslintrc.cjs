@@ -17,5 +17,6 @@ module.exports = {
   plugins: ["react"],
   rules: {
     "no-implicit-coercion": "off",
+    "@typescript-eslint/naming-convention": "off",
   },
 };
