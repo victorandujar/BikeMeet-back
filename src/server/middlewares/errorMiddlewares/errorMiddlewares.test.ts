@@ -1,9 +1,6 @@
 import { type NextFunction, type Request, type Response } from "express";
-import { CustomError } from "../../CustomError/CustomError";
-import {
-  generalError,
-  notFoundError,
-} from "./errorMiddlewares/errorMiddlewares";
+import { CustomError } from "../../../CustomError/CustomError.js";
+import { generalError, notFoundError } from "./errorMiddlewares.js";
 
 const res = {
   status: jest.fn().mockReturnThis(),

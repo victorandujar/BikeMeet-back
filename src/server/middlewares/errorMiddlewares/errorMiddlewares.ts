@@ -1,11 +1,11 @@
 import { type NextFunction, type Request, type Response } from "express";
-import { CustomError } from "../../../CustomError/CustomError";
+import { CustomError } from "../../../CustomError/CustomError.js";
 import createDebug from "debug";
 
 const debug = createDebug("bikemeet:server:middlewares:errorMiddlewares");
 const notFoundStatusCode = 404;
-const generalErrorStatusCode = 500;
-const publicMessageText = "Something went wrong";
+const generalErrorStatusCodeDefault = 500;
+const publicMessageDefault = "Something went wrong";
 
 export const notFoundError = (
   req: Request,
@@ -29,8 +29,8 @@ export const generalError = (
 ) => {
   debug(error.message);
 
-  const statusCode = error.statusCode || generalErrorStatusCode;
-  const publicMessage = error.publicMessage || publicMessageText;
+  const statusCode = error.statusCode || generalErrorStatusCodeDefault;
+  const publicMessage = error.publicMessage || publicMessageDefault;
 
   res.status(statusCode).json({ error: publicMessage });
 };
