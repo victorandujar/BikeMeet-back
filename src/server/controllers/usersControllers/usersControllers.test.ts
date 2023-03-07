@@ -91,4 +91,18 @@ describe("Given a loginUser function", () => {
       expect(next).toHaveBeenCalledWith(expectedError);
     });
   });
+
+  describe("When the data base rejects the request and responds with an error", () => {
+    test("Then it should call its next method", async () => {
+      const error = new Error("Fatal error");
+
+      User.findOne = jest.fn().mockImplementationOnce(() => ({
+        exec: jest.fn().mockRejectedValue(error),
+      }));
+
+      await loginUser(req, res as Response, next);
+
+      expect(next).toHaveBeenCalledWith(error);
+    });
+  });
 });
