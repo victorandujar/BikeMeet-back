@@ -6,6 +6,7 @@ import bcryptjs from "bcryptjs";
 import { app } from "../../index.js";
 import request from "supertest";
 import { type UserCredentials, type UserData } from "../../../types/types";
+import jwt from "jsonwebtoken";
 
 let mongodbServer: MongoMemoryServer;
 
@@ -40,6 +41,9 @@ describe("Given a POST '/users/login' endpoint", () => {
 
   describe("When it receives a request with an email 'jordi@gmail.com' and a password '12345678'", () => {
     test("Then it should respond with status 200 and an object in its body with the property 'token'", async () => {
+      jwt.sign = jest.fn().mockImplementation(() => ({
+        token: "asdfasdfasdfgsadf3242345",
+      }));
       const expectedStatus = 200;
       const hashedPassword = await bcryptjs.hash(user.password, 10);
 
