@@ -3,13 +3,20 @@ import { CustomError } from "../../../CustomError/CustomError";
 import createDebug from "debug";
 
 const debug = createDebug("bikemeet:server:middlewares:errorMiddlewares");
+const notFoundStatusCode = 404;
+const generalErrorStatusCode = 500;
+const publicMessageText = "Something went wrong";
 
 export const notFoundError = (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const error = new CustomError("Path not found", 404, "Endpoint not found");
+  const error = new CustomError(
+    "Path not found",
+    notFoundStatusCode,
+    "Endpoint not found"
+  );
 
   next(error);
 };
@@ -22,8 +29,8 @@ export const generalError = (
 ) => {
   debug(error.message);
 
-  const statusCode = error.statusCode || 500;
-  const publicMessage = error.publicMessage || "Something went wrong";
+  const statusCode = error.statusCode || generalErrorStatusCode;
+  const publicMessage = error.publicMessage || publicMessageText;
 
   res.status(statusCode).json({ error: publicMessage });
 };
