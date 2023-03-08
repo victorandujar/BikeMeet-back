@@ -11,7 +11,9 @@ import usersRouter from "./routers/usersRouter/usersRouter.js";
 export const app = express();
 app.disable("x-powered-by");
 
-const allowedOrigins = [process.env.LOCALHOST!, process.env.NETLIFY_URL!];
+const localHostUrl = "http://localhost:3000";
+
+const allowedOrigins = [localHostUrl, process.env.NETLIFY_URL!];
 
 const options: cors.CorsOptions = {
   origin: allowedOrigins,
