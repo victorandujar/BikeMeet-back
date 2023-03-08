@@ -1,4 +1,7 @@
 import mongoose from "mongoose";
+import createDebug from "debug";
+
+const debug = createDebug("bikemeet:database:connectDataBase:*");
 
 const connectDataBase = async (url: string) => {
   mongoose.set("strictQuery", false);
@@ -6,7 +9,7 @@ const connectDataBase = async (url: string) => {
   try {
     await mongoose.connect(url);
   } catch (error) {
-    throw new Error("Error while connecting to database.");
+    debug(error);
   }
 };
 

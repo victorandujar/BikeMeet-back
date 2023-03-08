@@ -7,12 +7,14 @@ import jwt from "jsonwebtoken";
 import loginUser from "./usersControllers";
 import { CustomError } from "../../../CustomError/CustomError";
 
-const res = {
+const res: Partial<Response> = {
   status: jest.fn().mockReturnThis(),
   json: jest.fn(),
-} as Partial<Response>;
-const req = {} as Request;
-const next = jest.fn() as NextFunction;
+};
+const req: Partial<
+  Request<Record<string, unknown>, Record<string, unknown>, UserCredentials>
+> = {};
+const next = jest.fn();
 
 beforeEach(() => jest.clearAllMocks());
 
@@ -38,7 +40,15 @@ describe("Given a loginUser function", () => {
       bcryptjs.compare = jest.fn().mockResolvedValue(true);
       jwt.sign = jest.fn().mockReturnValue("dsjakhsdsagdhgashj");
 
-      await loginUser(req, res as Response, next);
+      await loginUser(
+        req as Request<
+          Record<string, unknown>,
+          Record<string, unknown>,
+          UserCredentials
+        >,
+        res as Response,
+        next
+      );
 
       expect(res.status).toHaveBeenCalledWith(expectedStatus);
       expect(res.json).toHaveBeenCalledWith(expectedResponse);
@@ -67,7 +77,15 @@ describe("Given a loginUser function", () => {
 
       bcryptjs.compare = jest.fn().mockResolvedValue(false);
 
-      await loginUser(req, res as Response, next);
+      await loginUser(
+        req as Request<
+          Record<string, unknown>,
+          Record<string, unknown>,
+          UserCredentials
+        >,
+        res as Response,
+        next
+      );
 
       expect(next).toHaveBeenCalledWith(expectedError);
     });
@@ -86,7 +104,15 @@ describe("Given a loginUser function", () => {
         exec: jest.fn().mockResolvedValue(undefined),
       }));
 
-      await loginUser(req, res as Response, next);
+      await loginUser(
+        req as Request<
+          Record<string, unknown>,
+          Record<string, unknown>,
+          UserCredentials
+        >,
+        res as Response,
+        next
+      );
 
       expect(next).toHaveBeenCalledWith(expectedError);
     });
@@ -100,7 +126,15 @@ describe("Given a loginUser function", () => {
         exec: jest.fn().mockRejectedValue(error),
       }));
 
-      await loginUser(req, res as Response, next);
+      await loginUser(
+        req as Request<
+          Record<string, unknown>,
+          Record<string, unknown>,
+          UserCredentials
+        >,
+        res as Response,
+        next
+      );
 
       expect(next).toHaveBeenCalledWith(error);
     });
