@@ -7,7 +7,7 @@ import {
 } from "../../../types/types";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
-import loginUser, { registerUser } from "./usersControllers";
+import { loginUser, registerUser } from "./usersControllers";
 import { CustomError } from "../../../CustomError/CustomError";
 
 const res: Partial<Response> = {
@@ -184,9 +184,9 @@ describe("Given a registerUser controller", () => {
       };
 
       const expectedError = new CustomError(
-        "The user couldn't be created",
+        "The user couldn't be created.",
         409,
-        "There was a problem creating the user"
+        "There was a problem creating the user."
       );
 
       req.body = mockUser;

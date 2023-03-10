@@ -12,7 +12,7 @@ import bcryptjs from "bcryptjs";
 const requestSucceedStatus = 200;
 const hashingPasswordLength = 8;
 
-const loginUser = async (
+export const loginUser = async (
   req: Request<
     Record<string, unknown>,
     Record<string, unknown>,
@@ -80,7 +80,7 @@ export const registerUser = async (
   const { email, name, password } = req.body;
 
   try {
-    const hashedPassword = bcryptjs.hash(password, hashingPasswordLength);
+    const hashedPassword = await bcryptjs.hash(password, hashingPasswordLength);
 
     await User.create({
       email,
@@ -91,13 +91,11 @@ export const registerUser = async (
     res.status(201).json({ message: "The user has been created" });
   } catch (error) {
     const customError = new CustomError(
-      "The user couldn't be created",
+      "The user couldn't be created.",
       409,
-      "There was a problem creating the user"
+      "There was a problem creating the user."
     );
 
     next(customError);
   }
 };
-
-export default loginUser;
