@@ -5,7 +5,11 @@ import { User } from "../../../database/models/User";
 import bcryptjs from "bcryptjs";
 import { app } from "../../index.js";
 import request from "supertest";
-import { type UserCredentials, type UserData } from "../../../types/types";
+import {
+  type UserRegisterCredentials,
+  type UserCredentials,
+  type UserData,
+} from "../../../types/types";
 import jwt from "jsonwebtoken";
 
 let mongodbServer: MongoMemoryServer;
@@ -58,6 +62,31 @@ describe("Given a POST '/users/login' endpoint", () => {
         .expect(expectedStatus);
 
       expect(response.body).toHaveProperty("token");
+    });
+  });
+});
+
+describe("Given a POST /users/register endpoint", () => {
+  describe("When it receives a request to register a user properly", () => {
+    beforeEach(async () => {
+      await User.deleteMany();
+    });
+    test("Then it should respond with a message 'The user hase been created'", async () => {
+      const newUser: UserRegisterCredentials = {
+        email: "victor@andujar.org",
+        password: "12345678",
+        name: "victor",
+      };
+      const registerPath = "/users/register";
+
+      const expectedStatus = 201;
+
+      const response = await request(app)
+        .post(registerPath)
+        .send(newUser)
+        .expect(expectedStatus);
+
+      expect(response.body).toHaveProperty("message");
     });
   });
 });
