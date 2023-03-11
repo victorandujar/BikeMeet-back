@@ -6,7 +6,7 @@ import { getEvents } from "./eventsControllers";
 
 const mockEventGravel: EventData = {
   name: "Sa costa",
-  date: "27/02/1898",
+  date: new Date(),
   description: "asdjklksadhdashdjk",
   distance: 123,
   image: "sacosta.png",
@@ -15,7 +15,7 @@ const mockEventGravel: EventData = {
 
 const mockEventRoad: EventData = {
   name: "Sa costa",
-  date: "27/02/1898",
+  date: new Date(),
   description: "asdjklksadhdashdjk",
   distance: 123,
   image: "sacosta.png",

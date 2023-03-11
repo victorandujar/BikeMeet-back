@@ -7,13 +7,12 @@ import {
 } from "./middlewares/errorMiddlewares/errorMiddlewares.js";
 import cors from "cors";
 import usersRouter from "./routers/usersRouter/usersRouter.js";
+import eventsRouter from "./routers/eventsRouter/eventsRouter.js";
 
 export const app = express();
 app.disable("x-powered-by");
 
-const localHostUrl = "http://localhost:3000";
-
-const allowedOrigins = [localHostUrl, process.env.NETLIFY_URL!];
+const allowedOrigins = [process.env.LOCALHOST!, process.env.NETLIFY_URL!];
 
 const options: cors.CorsOptions = {
   origin: allowedOrigins,
@@ -24,6 +23,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 app.use("/users", usersRouter);
+app.use("/events", eventsRouter);
 
 app.use(notFoundError);
 app.use(generalError);
