@@ -2,7 +2,7 @@ export interface EventData {
   name: string;
   distance: number;
   type: string;
-  date: string;
+  date: Date;
   description: string;
   image: string;
 }
