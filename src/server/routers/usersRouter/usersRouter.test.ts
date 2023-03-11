@@ -1,7 +1,7 @@
 import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
 import connectDataBase from "../../../database/connectDataBase";
-import { User } from "../../../database/models/User";
+import { User } from "../../../database/models/Users/User";
 import bcryptjs from "bcryptjs";
 import { app } from "../../index.js";
 import request from "supertest";
@@ -9,7 +9,7 @@ import {
   type UserRegisterCredentials,
   type UserCredentials,
   type UserData,
-} from "../../../types/types";
+} from "../../../types/users/types";
 import jwt from "jsonwebtoken";
 
 let mongodbServer: MongoMemoryServer;

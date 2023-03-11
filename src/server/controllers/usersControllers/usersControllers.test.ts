@@ -1,10 +1,10 @@
 import { type NextFunction, type Request, type Response } from "express";
 import mongoose from "mongoose";
-import { User } from "../../../database/models/User";
+import { User } from "../../../database/models/Users/User";
 import {
   type UserRegisterCredentials,
   type UserCredentials,
-} from "../../../types/types";
+} from "../../../types/users/types";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { loginUser, registerUser } from "./usersControllers";
