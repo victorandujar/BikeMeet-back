@@ -1,11 +1,11 @@
 import { type NextFunction, type Request, type Response } from "express";
 import { CustomError } from "../../../CustomError/CustomError.js";
-import { User } from "../../../database/models/User.js";
+import { User } from "../../../database/models/Users/User.js";
 import {
   type UserRegisterCredentials,
   type CustomJwtPayload,
   type UserCredentials,
-} from "../../../types/types";
+} from "../../../types/users/types";
 import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
 
@@ -27,14 +27,7 @@ export const loginUser = async (
     const user = await User.findOne({ email }).exec();
 
     if (!user) {
-      const customError = new CustomError(
-        "Wrong credentials",
-        401,
-        "Wrong credentials"
-      );
-
-      next(customError);
-      return;
+      throw new Error("Wrong credentials");
     }
 
     const passwordConfirmation = await bcryptjs.compare(
@@ -43,14 +36,7 @@ export const loginUser = async (
     );
 
     if (!passwordConfirmation) {
-      const customError = new CustomError(
-        "Wrong credentials",
-        401,
-        "Wrong credentials"
-      );
-
-      next(customError);
-      return;
+      throw new Error("Wrong credentials");
     }
 
     const jwtPayload: CustomJwtPayload = {
