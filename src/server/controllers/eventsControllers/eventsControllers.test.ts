@@ -2,7 +2,7 @@ import { type Request, type Response } from "express";
 import { CustomError } from "../../../CustomError/CustomError";
 import { Event } from "../../../database/models/Events/Events";
 import { type EventsData, type EventData } from "../../../types/events/types";
-import { type UserId } from "../../../types/users/types";
+import { type CustomRequest } from "../../../types/users/types";
 import { getAllEvents, getUserEvents } from "./eventsControllers";
 
 const mockEventGravel: EventData = {
@@ -115,7 +115,7 @@ describe("Given the getUserEvents controller", () => {
         req as Request<
           Record<string, unknown>,
           Record<string, unknown>,
-          UserId
+          CustomRequest
         >,
         res as Response,
         next
@@ -131,7 +131,7 @@ describe("Given the getUserEvents controller", () => {
       };
       const req: Partial<Request> = {};
       const next = jest.fn();
-      req.body = { postedBy: "213i21309213891jkdk" };
+      req.params = { postedBy: "213i21309213891jkdk" };
 
       Event.find = jest.fn().mockImplementationOnce(() => ({
         exec: jest.fn().mockReturnValue(mockEventsList),
@@ -141,7 +141,7 @@ describe("Given the getUserEvents controller", () => {
         req as Request<
           Record<string, unknown>,
           Record<string, unknown>,
-          UserId
+          CustomRequest
         >,
         res as Response,
         next
@@ -174,7 +174,7 @@ describe("Given the getUserEvents controller", () => {
         req as Request<
           Record<string, unknown>,
           Record<string, unknown>,
-          UserId
+          CustomRequest
         >,
         res as Response,
         next
