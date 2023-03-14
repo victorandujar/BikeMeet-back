@@ -1,5 +1,5 @@
 import { type Response, type NextFunction } from "express";
-import { CustomError } from "../../../CustomError/CustomError";
+import { CustomError } from "../../../CustomError/CustomError.js";
 import {
   type CustomJwtPayload,
   type CustomRequest,
