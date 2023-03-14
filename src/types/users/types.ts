@@ -19,3 +19,7 @@ export interface CustomJwtPayload extends JwtPayload {
   email: string;
   sub: string;
 }
+
+export interface UserId extends Request {
+  postedBy: string;
+}
