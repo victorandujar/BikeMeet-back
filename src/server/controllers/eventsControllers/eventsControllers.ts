@@ -24,14 +24,12 @@ export const getAllEvents = async (
 };
 
 export const getUserEvents = async (
-  req: Request<Record<string, unknown>, Record<string, unknown>, CustomRequest>,
+  req: CustomRequest,
   res: Response,
   next: NextFunction
 ) => {
-  const postedBy = req.body;
-
   try {
-    const events = await Event.find({ postedBy }).exec();
+    const events = await Event.find({ postedBy: req.postedBy }).exec();
 
     res.status(200).json({ events });
   } catch (error) {

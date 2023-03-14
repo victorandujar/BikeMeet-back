@@ -111,15 +111,7 @@ describe("Given the getUserEvents controller", () => {
         exec: jest.fn().mockReturnValue({ postedBy: "12324324fdsvsdafsg45" }),
       }));
 
-      await getUserEvents(
-        req as Request<
-          Record<string, unknown>,
-          Record<string, unknown>,
-          CustomRequest
-        >,
-        res as Response,
-        next
-      );
+      await getUserEvents(req as CustomRequest, res as Response, next);
 
       expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
     });
@@ -137,15 +129,7 @@ describe("Given the getUserEvents controller", () => {
         exec: jest.fn().mockReturnValue(mockEventsList),
       }));
 
-      await getUserEvents(
-        req as Request<
-          Record<string, unknown>,
-          Record<string, unknown>,
-          CustomRequest
-        >,
-        res as Response,
-        next
-      );
+      await getUserEvents(req as CustomRequest, res as Response, next);
 
       expect(res.json).toHaveBeenCalledWith({ events: mockEventsList });
     });
@@ -170,15 +154,7 @@ describe("Given the getUserEvents controller", () => {
 
       Event.find = jest.fn().mockReturnValue(undefined);
 
-      await getUserEvents(
-        req as Request<
-          Record<string, unknown>,
-          Record<string, unknown>,
-          CustomRequest
-        >,
-        res as Response,
-        next
-      );
+      await getUserEvents(req as CustomRequest, res as Response, next);
 
       expect(next).toHaveBeenCalledWith(expectedError);
     });
