@@ -1,4 +1,5 @@
 import { type JwtPayload } from "jsonwebtoken";
+import { type Request } from "express";
 
 export interface UserCredentials {
   email: string;
@@ -16,10 +17,9 @@ export interface UserRegisterCredentials {
 }
 
 export interface CustomJwtPayload extends JwtPayload {
-  email: string;
   sub: string;
 }
 
-export interface UserId extends Request {
+export interface CustomRequest extends Request {
   postedBy: string;
 }

@@ -1,7 +1,7 @@
 import { type NextFunction, type Request, type Response } from "express";
 import { CustomError } from "../../../CustomError/CustomError.js";
 import { Event } from "../../../database/models/Events/Events.js";
-import { type UserId } from "../../../types/users/types.js";
+import { type CustomRequest } from "../../../types/users/types.js";
 
 export const getAllEvents = async (
   req: Request,
@@ -24,11 +24,11 @@ export const getAllEvents = async (
 };
 
 export const getUserEvents = async (
-  req: Request<Record<string, unknown>, Record<string, unknown>, UserId>,
+  req: Request<Record<string, unknown>, Record<string, unknown>, CustomRequest>,
   res: Response,
   next: NextFunction
 ) => {
-  const { postedBy } = req.body;
+  const postedBy = req.body;
 
   try {
     const events = await Event.find({ postedBy }).exec();
