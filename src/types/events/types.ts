@@ -5,10 +5,8 @@ export interface EventData {
   date: Date;
   description: string;
   image: string;
-}
-
-export interface UserId extends Request {
-  userId: string;
+  id: string;
+  postedBy: string;
 }
 
 export type EventsData = EventData[];
