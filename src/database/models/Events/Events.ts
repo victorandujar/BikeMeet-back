@@ -25,6 +25,7 @@ const EventSchema = new Schema({
     type: String,
     required: true,
   },
+  postedBy: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
 export const Event = model("Event", EventSchema, "events");
