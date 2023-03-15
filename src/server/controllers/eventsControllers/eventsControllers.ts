@@ -36,7 +36,31 @@ export const getUserEvents = async (
     const customError = new CustomError(
       "Bad request",
       400,
-      "Couldn't retrieve bike events"
+      "Couldn't retrieve bike events."
+    );
+
+    next(customError);
+  }
+};
+
+export const deleteEvents = async (
+  req: CustomRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const { idEvent } = req.params;
+  try {
+    const event = await Event.findByIdAndDelete({
+      _id: idEvent,
+      postedBy: req.postedBy,
+    }).exec();
+
+    res.status(200).json({ event });
+  } catch (error) {
+    const customError = new CustomError(
+      "Internal Server Error. Sorry something went wrong.",
+      500,
+      "The event couldn't be deleted."
     );
 
     next(customError);
