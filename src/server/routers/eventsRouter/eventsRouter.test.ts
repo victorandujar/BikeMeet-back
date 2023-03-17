@@ -5,7 +5,6 @@ import { app } from "../..";
 import connectDataBase from "../../../database/connectDataBase";
 import { Event } from "../../../database/models/Events/Events";
 import { type EventData } from "../../../types/events/types";
-import crypto from "crypto";
 import jwt from "jsonwebtoken";
 
 let mongodbServer: MongoMemoryServer;
@@ -57,8 +56,6 @@ describe("Given a POST '/create' endpoint", () => {
     test("Then it should respond with status 201", async () => {
       const urlCreate = "/events/create";
       const expectedStatus = 201;
-
-      const expectedResponseBody = mockEventRoad;
 
       const userId = new mongoose.Types.ObjectId();
       jwt.verify = jest.fn().mockReturnValue({ sub: userId });
