@@ -27,7 +27,7 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage });
+const upload = multer({ storage, limits: { fileSize: 10000000 } });
 
 const getEventsRoute = "/";
 const getUserEventsRoute = "/my-events";

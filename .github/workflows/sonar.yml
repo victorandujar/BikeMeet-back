@@ -20,6 +20,8 @@ jobs:
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_API_KEY: ${{ secrets.SUPABASE_API_KEY }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          MONGODB_CONNECTION_URL: ${{ secrets.MONGODB_CONNECTION_URL }}
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
