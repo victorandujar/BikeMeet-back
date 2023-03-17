@@ -1,8 +1,11 @@
+import { type InferSchemaType } from "mongoose";
+import { type eventSchema } from "../../database/models/Events/Events";
+
 export interface EventData {
   name: string;
   distance: number;
   type: string;
-  date: Date;
+  date: Date | string;
   description: string;
   image: string;
   id: string;
@@ -10,3 +13,5 @@ export interface EventData {
 }
 
 export type EventsData = EventData[];
+
+export type EventStructure = InferSchemaType<typeof eventSchema>;
