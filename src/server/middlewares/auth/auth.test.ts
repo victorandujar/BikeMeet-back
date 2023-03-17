@@ -52,19 +52,19 @@ describe("Given an auth middleware", () => {
 
   describe("When it receives a request with an authorization header 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pcmVpYTQiLCJpZCI6IjYzNmZjMzZjY2IxMDFhM2NkNGJlZGQ4YSIsImlhdCI6MTY2ODI2OTE3OSwiZXhwIjoxNjY4NDQxOTc5fQ.n1WpQo6lzeGiJpfngUzr86iO55218EvdpUAIRSThbUE'", () => {
     test("Then it should add the postedBy property and the token to the request and invoke next", () => {
-      const req: Partial<Request> = {};
+      const req: Partial<CustomRequest> = {};
       req.header = jest
         .fn()
         .mockReturnValueOnce(
           "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pcmVpYTQiLCJpZCI6IjYzNmZjMzZjY2IxMDFhM2NkNGJlZGQ4YSIsImlhdCI6MTY2ODI2OTE3OSwiZXhwIjoxNjY4NDQxOTc5fQ.n1WpQo6lzeGiJpfngUzr86iO55218EvdpUAIRSThbUE"
         );
-      const postedBy = new mongoose.Types.ObjectId();
-      jwt.verify = jest.fn().mockReturnValueOnce({ sub: postedBy });
+      const userId = new mongoose.Types.ObjectId();
+      jwt.verify = jest.fn().mockReturnValueOnce({ sub: userId });
 
       auth(req as CustomRequest, res as Response, next);
 
       expect(next).toHaveBeenCalled();
-      expect(req).toHaveProperty("postedBy", postedBy);
+      expect(req).toHaveProperty("userId", userId);
     });
   });
 

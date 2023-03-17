@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 
-const EventSchema = new Schema({
+export const eventSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -15,7 +15,6 @@ const EventSchema = new Schema({
   },
   date: {
     type: Date,
-    required: true,
   },
   description: {
     type: String,
@@ -28,4 +27,4 @@ const EventSchema = new Schema({
   postedBy: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
-export const Event = model("Event", EventSchema, "events");
+export const Event = model("Event", eventSchema, "events");

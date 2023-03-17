@@ -1,6 +1,8 @@
 import { type NextFunction, type Request, type Response } from "express";
+import mongoose from "mongoose";
 import { CustomError } from "../../../CustomError/CustomError.js";
 import { Event } from "../../../database/models/Events/Events.js";
+import { type EventStructure } from "../../../types/events/types.js";
 import { type CustomRequest } from "../../../types/users/types.js";
 
 export const getAllEvents = async (
@@ -29,7 +31,7 @@ export const getUserEvents = async (
   next: NextFunction
 ) => {
   try {
-    const events = await Event.find({ postedBy: req.postedBy }).exec();
+    const events = await Event.find({ postedBy: req.userId }).exec();
 
     res.status(200).json({ events });
   } catch (error) {
@@ -52,7 +54,7 @@ export const deleteEvents = async (
   try {
     const event = await Event.findByIdAndDelete({
       _id: idEvent,
-      postedBy: req.postedBy,
+      postedBy: req.userId,
     }).exec();
 
     res.status(200).json({ event });
@@ -61,6 +63,39 @@ export const deleteEvents = async (
       "Internal Server Error. Sorry something went wrong.",
       500,
       "The event couldn't be deleted."
+    );
+
+    next(customError);
+  }
+};
+
+export const createEvent = async (
+  req: CustomRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const { date, description, distance, image, name, type } =
+    req.body as EventStructure;
+  const { userId } = req;
+  try {
+    const newEvent: EventStructure = {
+      date,
+      description,
+      distance,
+      image,
+      name,
+      type,
+      postedBy: new mongoose.Types.ObjectId(userId),
+    };
+
+    const createdEvent = await Event.create(newEvent);
+
+    res.status(201).json({ event: createdEvent });
+  } catch (error) {
+    const customError = new CustomError(
+      "Couldn't create the event.",
+      400,
+      "Couldn't create the event."
     );
 
     next(customError);
