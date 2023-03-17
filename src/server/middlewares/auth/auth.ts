@@ -25,7 +25,7 @@ const auth = (req: CustomRequest, res: Response, next: NextFunction) => {
       process.env.JWT_SECRET!
     ) as CustomJwtPayload;
 
-    req.postedBy = postedBy;
+    req.userId = postedBy;
 
     next();
   } catch (error: unknown) {
