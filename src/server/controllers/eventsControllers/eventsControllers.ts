@@ -101,3 +101,25 @@ export const createEvent = async (
     next(customError);
   }
 };
+
+export const findEvent = async (
+  req: CustomRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const { idEvent } = req.params;
+
+  try {
+    const eventById = await Event.findById(idEvent).exec();
+
+    res.status(200).json({ event: eventById });
+  } catch (error) {
+    const customError = new CustomError(
+      "Couldn't find any event to load.",
+      400,
+      "Couldn't find any event to load."
+    );
+
+    next(customError);
+  }
+};
