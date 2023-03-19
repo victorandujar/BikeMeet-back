@@ -110,7 +110,7 @@ export const findEvent = async (
   const { idEvent } = req.params;
 
   try {
-    const eventById = await Event.findById(idEvent).exec();
+    const eventById = await Event.findById({ _id: idEvent }).exec();
 
     res.status(200).json({ event: eventById });
   } catch (error) {
