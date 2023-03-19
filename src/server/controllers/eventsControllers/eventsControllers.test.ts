@@ -6,6 +6,7 @@ import { type CustomRequest } from "../../../types/users/types";
 import {
   createEvent,
   deleteEvents,
+  findEvent,
   getAllEvents,
   getUserEvents,
 } from "./eventsControllers";
@@ -289,6 +290,74 @@ describe("Given a createEvent controller", () => {
       Event.create = jest.fn().mockRejectedValue(undefined);
 
       await createEvent(req as CustomRequest, res as Response, next);
+
+      expect(next).toHaveBeenCalledWith(expectedError);
+    });
+  });
+});
+
+describe("Given a findEvent controller", () => {
+  describe("When it receives a response", () => {
+    test("Then it should call its status method with 200 status code", async () => {
+      const res: Partial<Response> = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockResolvedValue(mockEventRoad.id),
+      };
+      const req: Partial<CustomRequest> = {
+        params: { id: `${mockEventRoad.id}` },
+      };
+      const next = jest.fn();
+      const expectedStatusCode = 200;
+
+      Event.findById = jest.fn().mockImplementationOnce(() => ({
+        exec: jest.fn().mockReturnValue(mockEventRoad),
+      }));
+
+      await findEvent(req as CustomRequest, res as Response, next);
+
+      expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
+    });
+
+    test("Then it should call its json method with an event", async () => {
+      const res: Partial<Response> = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockResolvedValue(mockEventRoad.id),
+      };
+      const req: Partial<CustomRequest> = {
+        params: { id: `${mockEventRoad.id}` },
+      };
+      const next = jest.fn();
+
+      Event.findById = jest.fn().mockImplementationOnce(() => ({
+        exec: jest.fn().mockReturnValue(mockEventRoad),
+      }));
+
+      await findEvent(req as CustomRequest, res as Response, next);
+
+      expect(res.json).toHaveBeenCalledWith({ event: mockEventRoad });
+    });
+  });
+
+  describe("When it receives a bad request", () => {
+    test("Then it should call its next method with a custom error", async () => {
+      const res: Partial<Response> = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockResolvedValue({}),
+      };
+      const req: Partial<CustomRequest> = {};
+      const next = jest.fn();
+
+      req.params = {};
+
+      const expectedError = new CustomError(
+        "Couldn't find any event to load.",
+        400,
+        "Couldn't find any event to load."
+      );
+
+      Event.findById = jest.fn().mockReturnValue(undefined);
+
+      await findEvent(req as CustomRequest, res as Response, next);
 
       expect(next).toHaveBeenCalledWith(expectedError);
     });
