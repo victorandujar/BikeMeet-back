@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   createEvent,
   deleteEvents,
+  findEvent,
   getAllEvents,
   getUserEvents,
 } from "../../controllers/eventsControllers/eventsControllers.js";
@@ -33,6 +34,7 @@ const getEventsRoute = "/";
 const getUserEventsRoute = "/my-events";
 const deleteEventRoute = "/delete/:idEvent";
 const createEventRoute = "/create";
+const findByIdRoute = "/detail/:idEvent";
 
 const eventsRouter = Router();
 
@@ -47,5 +49,6 @@ eventsRouter.post(
   supaBase,
   createEvent
 );
+eventsRouter.get(findByIdRoute, auth, findEvent);
 
 export default eventsRouter;
