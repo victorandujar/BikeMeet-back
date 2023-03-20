@@ -1,6 +1,6 @@
 import { type NextFunction, type Response } from "express";
-import { Event } from "../../../database/models/Events/Events";
-import { type CustomRequest } from "../../../types/users/types";
+import { Event } from "../../../../database/models/Events/Events";
+import { type CustomRequest } from "../../../../types/users/types";
 import fs from "fs/promises";
 import supaBase, { supabase } from "./supaBase";
 

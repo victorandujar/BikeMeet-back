@@ -10,9 +10,10 @@ import multer from "multer";
 import auth from "../../middlewares/auth/auth.js";
 import crypto from "crypto";
 import path from "path";
-import supaBase from "../../middlewares/supaBase/supaBase.js";
+import supaBase from "../../middlewares/images/supaBase/supaBase.js";
 import { validate } from "express-validation";
 import eventsSchema from "../../schemas/eventsSchemas/eventsSchema.js";
+import optimizing from "../../middlewares/images/optimizing/optimizing.js";
 
 const storage = multer.diskStorage({
   destination: "uploads/",
@@ -46,6 +47,7 @@ eventsRouter.post(
   auth,
   upload.single("image"),
   validate(eventsSchema, {}, { abortEarly: false }),
+  optimizing,
   supaBase,
   createEvent
 );

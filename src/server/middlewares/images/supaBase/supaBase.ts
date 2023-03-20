@@ -1,6 +1,6 @@
-import "../../../loadEnvironment.js";
+import "../../../../loadEnvironment.js";
 import { createClient } from "@supabase/supabase-js";
-import { type CustomRequest } from "../../../types/users/types.js";
+import { type CustomRequest } from "../../../../types/users/types.js";
 import { type Response, type NextFunction } from "express";
 import fs from "fs/promises";
 import path from "path";

@@ -103,7 +103,7 @@ export const createEvent = async (
 };
 
 export const findEvent = async (
-  req: CustomRequest,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
