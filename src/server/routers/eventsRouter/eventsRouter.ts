@@ -10,7 +10,7 @@ import multer from "multer";
 import auth from "../../middlewares/auth/auth.js";
 import crypto from "crypto";
 import path from "path";
-import supaBase from "../../middlewares/images/supaBase/supaBase.js";
+import imageBackup from "../../middlewares/images/imageBackup/imageBackup.js";
 import { validate } from "express-validation";
 import eventsSchema from "../../schemas/eventsSchemas/eventsSchema.js";
 import optimizing from "../../middlewares/images/optimizing/optimizing.js";
@@ -48,7 +48,7 @@ eventsRouter.post(
   upload.single("image"),
   validate(eventsSchema, {}, { abortEarly: false }),
   optimizing,
-  supaBase,
+  imageBackup,
   createEvent
 );
 eventsRouter.get(findByIdRoute, auth, findEvent);

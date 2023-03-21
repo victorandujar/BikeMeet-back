@@ -10,7 +10,7 @@ export const supabase = createClient(
   process.env.SUPABASE_API_KEY!
 );
 
-const supaBase = async (
+const imageBackup = async (
   req: CustomRequest,
   res: Response,
   next: NextFunction
@@ -39,4 +39,4 @@ const supaBase = async (
   }
 };
 
-export default supaBase;
+export default imageBackup;
