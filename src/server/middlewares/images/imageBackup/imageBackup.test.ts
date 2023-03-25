@@ -2,7 +2,7 @@ import { type NextFunction, type Response } from "express";
 import { Event } from "../../../../database/models/Events/Events";
 import { type CustomRequest } from "../../../../types/users/types";
 import fs from "fs/promises";
-import supaBase, { supabase } from "./supaBase";
+import imageBackup, { supabase } from "./imageBackup";
 
 afterEach(async () => {
   jest.clearAllMocks();
@@ -32,7 +32,7 @@ describe("Given a supaBase middleware function", () => {
         .fn()
         .mockReturnValueOnce({ data: { pulicUrl: mockImagePath } });
 
-      await supaBase(req as CustomRequest, res as Response, next);
+      await imageBackup(req as CustomRequest, res as Response, next);
 
       expect(next).toHaveBeenCalled();
     });
@@ -42,7 +42,7 @@ describe("Given a supaBase middleware function", () => {
     test("Then it should catch the error and call next", async () => {
       const req: Partial<CustomRequest> = {};
 
-      await supaBase(req as CustomRequest, res as Response, next);
+      await imageBackup(req as CustomRequest, res as Response, next);
 
       expect(next).toHaveBeenCalled();
     });
