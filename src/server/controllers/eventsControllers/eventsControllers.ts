@@ -18,7 +18,7 @@ export const getAllEvents = async (
     const customError = new CustomError(
       "Bad request",
       400,
-      "Couldn't retrieve bike events"
+      "Couldn't retrieve bike events."
     );
 
     next(customError);
